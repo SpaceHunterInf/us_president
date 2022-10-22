@@ -14,9 +14,9 @@ def cleaning(s):
     return s
 
 
-text_data = open('cleaned.txt', 'w', encoding='utf-8')
+text_data = open('cleaned_full.txt', 'w', encoding='utf-8')
 
-with open('test_text.txt', 'r', encoding='utf-8') as f:
+with open('fine_tuning_corpus.txt', 'r', encoding='utf-8') as f:
     article = f.readlines()
 
 for l in article:
