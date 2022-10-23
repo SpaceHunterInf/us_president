@@ -29,5 +29,16 @@ def generate_text(sequence, max_length):
 
 if __name__ == '__main__':
     sequence = input() # oil price
-    max_len = int(input()) # 20
-    generate_text(sequence, max_len)
+    if sequence == 'prompts.txt':
+        with open(sequence, 'r', encoding='utf-8') as f:
+            prompts = f.readlines()
+        
+        for p in prompts:
+            p_save = open('_'.join(p)+'.txt','w', encoding='utf-8')
+            for i in range(10):
+                text = generate_text(p, 50)
+                p_save.write(text+'\n')
+            p_save.close
+    else:        
+        max_len = int(input()) # 20
+        generate_text(sequence, max_len)
