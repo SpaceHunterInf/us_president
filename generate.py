@@ -12,7 +12,7 @@ def load_tokenizer(tokenizer_path):
 
 
 def generate_text(sequence, max_length):
-    model_path = "/result"
+    model_path = "result_full"
     model = load_model(model_path)
     tokenizer = load_tokenizer(model_path)
     ids = tokenizer.encode(f'{sequence}', return_tensors='pt')
@@ -24,21 +24,22 @@ def generate_text(sequence, max_length):
         top_k=50,
         top_p=0.95,
     )
-    print(tokenizer.decode(final_outputs[0], skip_special_tokens=True))
+    return tokenizer.decode(final_outputs[0], skip_special_tokens=True)
 
 
 if __name__ == '__main__':
     sequence = input() # oil price
     if sequence == 'prompts.txt':
         with open(sequence, 'r', encoding='utf-8') as f:
-            prompts = f.readlines()
-        
+            prompts = f.read().splitlines()
+            prompts = [x for x in prompts if x != '']
+
         for p in prompts:
-            p_save = open('_'.join(p)+'.txt','w', encoding='utf-8')
+            p_save = open('_'.join(p.split(' '))+'.txt','w', encoding='utf-8')
             for i in range(10):
                 text = generate_text(p, 50)
                 p_save.write(text+'\n')
-            p_save.close
+            p_save.close()
     else:        
         max_len = int(input()) # 20
-        generate_text(sequence, max_len)
+        print(generate_text(sequence, max_len))
